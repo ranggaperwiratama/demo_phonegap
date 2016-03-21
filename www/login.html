@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/1.2.4/css/ionic.css">
+    <link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/1.2.4/css/ionic.min.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.2.min.js"></script>
+    <script type="text/javascript">
+      $(function(){
+        $("#login").click(function(){
+          var username = $("#username").val();
+          var password = $("#password").val();
+          var dataString = "username=" + username + "&password=" + password + "&login=";
+          if($.trim(password).length > 0 & $.trim(password).length > 0){
+            $.ajax({
+              type: "POST",
+              url: "http://sianasdev.aat.or.id/index.php/home/login_mobile",
+              data: dataString,
+              crossDomain: true,
+              cache: false,
+              beforeSend: function(){
+                $("#login").html('Connecting...');
+              },
+              success: function(data){
+                if(data.success){
+                  localStorage.login = "true";
+                  localStorage.username = username;
+                  window.location.href = "index.html";
+                }else{
+                  alert("Login error");
+                  $("#login").html('Login');
+                }
+              }
+            });
+          }
+          return false;
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div class="bar bar-header bar-positive" style="margin-bottom:80px;">
+      <a href="index.html" class="button button-clear">Home</a>
+      <h1 class="title">Login</h1>
+    </div>
+    <br/><br/>
+    <input id="username" type="text" placeholder="username" />
+    <input id="password" type="password" placeholder="password" />
+    <button id="login">Login</button>
+  </body>
+</html>

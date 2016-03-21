@@ -1,63 +1,45 @@
 <html>
-<head>
- <link rel="stylesheet" type="text/css" href="css/ionic.css">
- <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.2.min.js"></script>
- <script type="text/javascript">
- $(document).ready(function()
- {
- $("#insert").click(function(){
- var title=$("#title").val();
- var duration=$("#duration").val();
- var price=$("#price").val();
- var dataString="title="+title+"&duration="+duration+"&price="+price+"&insert=";
- if($.trim(title).length>0 & $.trim(duration).length>0 & $.trim(price).length>0)
- {
- $.ajax({
- type: "POST",
- url:"http://stefan.daring.id/apipg/insert.php",
- data: dataString,
- crossDomain: true,
- cache: false,
- beforeSend: function(){ $("#insert").val('Connecting...');},
- success: function(data){
- if(data=="ok")
- {
- alert("inserted");
- $("#insert").val('submit');
- }
- else if(data=="error")
- {
- alert("error");
- }
- }
- });
- }return false;
- });
- });
- </script>
-</head>
-<body>
- <div class="bar bar-header bar-positive" style="margin-bottom:80px;">
- <h1 class="title">Insert Database</h1>
- <a class="button button-clear" href="readjson.html">Read JSON</a>
- </div><br/><br/>
- <div class="list">
- <input type="hidden" id="id" value=""/>
- <div class="item">
- <label>Title</label>
- <input type="text" id="title" value=""/>
- </div>
- <div class="item">
- <label>Duration</label>
- <input type="text" id="duration" value=""/>
- </div>
- <div class="item">
- <label>Price</label>
- <input type="text" id="price" value=""/>
- </div>
- <div class="item">
- <input type="button" id="insert" class="button button-block" value="Insert"/>
- </div>
- </div>
-</body>
+	<head>
+	<link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/1.2.4/css/ionic.css">
+		<link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/1.2.4/css/ionic.min.css">
+	<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.2.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function()
+	{
+		var url="http://sianasdev.aat.or.id/index.php/anakasuh/get_all_ankasuh";
+		var json = (function(){
+		var json = null;
+			$.ajax({
+					'async': false,
+					'global': false,
+					'url': url,
+					'dataType': "json",
+					'success': function (data) {
+						json = data;
+					}
+				});
+				return json;
+		})();
+		$(function() {
+			$("#title").text("Anak Asuh ("+json.anakasuh.length+")");
+		});		
+		for (var i=0; i<json.anakasuh.length; i++) {
+			var id=json.anakasuh[i].id;
+			var komunitas=json.anakasuh[i].komunitas;
+			var nama_lengkap=json.anakasuh[i].nama_lengkap;
+			var agama=json.anakasuh[i].agama;
+			$("#listview").append("<span class='item-note'>$"+komunitas+"</span><h2>"+ nama_lengkap + " </h2><p>"+ agama +"</p>");
+		};
+	});
+	</script>
+	</head>
+	<body>
+		<div class="bar bar-header bar-positive" style="margin-bottom:80px;">
+		<a href="login.html" class="button button-clear">Login</a>
+		<h1 class="title" id="title">Anak Asuh</h1>
+		</div>
+		<br/><br/>
+		<ul class="list" id="listview">
+		</ul>
+	</body>
 </html>
