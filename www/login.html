@@ -6,13 +6,13 @@
     <script type="text/javascript">
       $(function(){
         $("#login").click(function(){
-          var username = "AATADM-021";
-          var password = "123456";
+          var username=$("#username").val();
+		  var password=$("#password").val();
           var dataString = "username=" + username + "&password=" + password + "&login=";
-          if($.trim(password).length > 0 & $.trim(password).length > 0){
+          if($.trim(username).length > 0 & $.trim(password).length > 0){
             $.ajax({
               type: "POST",
-              url: "http://sianasdev.aat.or.id/index.php/home/login_mobile",
+              url: "http://sianasdev.aat.or.id/index.php/home/login_mobile2",
               data: dataString,
               crossDomain: true,
               cache: false,
@@ -20,10 +20,11 @@
                 $("#login").html('Connecting...');
               },
               success: function(data){
-                if(data.success){
+                if(data=="success"){
+				  alert("Login success");
                   localStorage.login = "true";
                   localStorage.username = username;
-                  window.location.href = "index.html";
+                  window.location.href = "logged.html";
                 }else{
                   alert("Login error");
                   $("#login").html('Login');
