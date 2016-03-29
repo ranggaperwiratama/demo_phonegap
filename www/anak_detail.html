@@ -7,6 +7,12 @@
 	<script type="text/javascript">
 	$(document).ready(function()
 	{
+		$("#list1").css("display", "none");
+		$("#list2").css("display", "none");
+		$("#list3").css("display", "none");
+		$("#list4").css("display", "none");
+		
+		
 		var id =  decodeURI(getUrlVars()["id"]);
 		var string = "id="+id;
 		$.ajax({
@@ -90,25 +96,63 @@
 					 }
 					 else if(data=="error")
 					 {
-					 alert("error");
+					 alert("Error");
 					 }
 				}
 			});
 		});
+		
+		$(".tabs a").click(function() {
+        $(this).parent().toggleClass("active");
+        $(this).parent().siblings().removeClass("active");
+        var tab = $(this).attr("href");
+        $(".list").not(tab).css("display", "none");
+        $(tab).fadeIn();
+    });
 	});
 	</script>
 	</head>
-	
 	<body>
-		<div class="bar bar-header bar-positive" style="margin-bottom:80px;">
+	<div class="bar bar-header bar-positive" style="margin-bottom:80px;">
 		<a href="logged.html" class="button button-clear">Home</a>
 		<h1 class="title" id="title">Anak Asuh</h1>
 		</div>
-		<br/><br/>
-		<form id="form" >
-		<ion-slide-box>
-		<ion-slide>
-		<div class="slide-wrapper">
+		<div id="tab" class="tabs-striped tabs-top tabs-background-positive tabs-color-light">
+    <div class="tabs">
+      <a class="tab-item" href="#list">
+        <i class="ion-person">
+		 </i>
+		 Data Pribadi
+      </a>
+      <a class="tab-item" href="#list1">
+        <i class="ion-ios-home"></i>
+        Alamat Rumah
+      </a>
+      <a class="tab-item" href="#list2">
+        <i class="ion-ios-home"></i>
+        Alamat Tinggal
+      </a>
+	   <a class="tab-item" href="#list3">
+        <i class="ion-android-call"></i>
+        Kontak
+      </a>
+	   <a class="tab-item" href="#list4">
+        <i class="ion-android-people"></i>
+        Orang Tua
+      </a>
+	  <a class="tab-item" href="#list5">
+        <i class="ion-ios-home"></i>
+        Alamat Orang Tua
+      </a>
+	  <a class="tab-item" href="#list6">
+        <i class="ion-android-bicycle"></i>
+        Lain - Lain
+      </a>
+    </div>
+  </div>
+  <form id="form">
+	</br></br></br></br></br>
+  		<div id="list" class="list">
 			 <input type="hidden" id="id" name="id" value=""/>
 			 <div class="item">
 			 <label>Komunitas</label>
@@ -123,33 +167,190 @@
 			 <input type="text" id="nama_panggilan" name="nama_panggilan" value=""/>
 			 </div>
 			 <div class="item">
+			 <label>Jenis Kelamin</label>
+			 <input type="text" id="jenis_kelamin" name="jenis_kelamin" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Agama</label>
+			 <input type="text" id="agama" name="agama" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Tempat Lahir</label>
+			 <input type="text" id="tempat_lahir" name="tempat_lahir" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Tanggal Lahir</label>
+			 <input type="text" id="tanggal_lahir" name="tanggal_lahir" value=""/>
+			 </div>
+		</div>
+		<div id="list1" class="list">
+			 <div class="item">
+			 <label>Alamat Rumah</label>
+			 <input type="text" id="alamat_rumah" name="alamat_rumah" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Jalan</label>
+			 <input type="text" id="alamat_rumah_jalan" name="alamat_rumah_jalan" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Kota</label>
+			 <input type="text" id="alamat_rumah_kota" name="alamat_rumah_kota" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Provinsi</label>
+			 <input type="text" id="alamat_rumah_provinsi" name="alamat_rumah_provinsi" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Kode Pos</label>
+			 <input type="text" id="alamat_rumah_kodepos" name="alamat_rumah_kodepos" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Negara</label>
+			 <input type="text" id="alamat_rumah_negara" name="alamat_rumah_negara" value=""/>
+			 </div>
+		</div>
+		<div id="list2" class="list">
+			 <div class="item">
+			 <label>Alamat Tinggal</label>
+			 <input type="text" id="alamat_tinggal" name="alamat_tinggal" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Jalan</label>
+			 <input type="text" id="alamat_tinggal_jalan" name="alamat_tinggal_jalan" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Kota</label>
+			 <input type="text" id="alamat_tinggal_kota" name="alamat_tinggal_kota" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Provinsi</label>
+			 <input type="text" id="alamat_tinggal_provinsi" name="alamat_tinggal_provinsi" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Kode Pos</label>
+			 <input type="text" id="alamat_tinggal_kodepos" name="alamat_tinggal_kodepos" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Negara</label>
+			 <input type="text" id="alamat_tinggal_negara" name="alamat_tinggal_negara" value=""/>
+			 </div>
+		</div>
+		<div id="list3" class="list">
+			 <div class="item">
+			 <label>Nomor Telpon</label>
+			 <input type="text" id="no_telp" name="no_telp" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Nomor HP</label>
+			 <input type="text" id="no_hp" name="no_hp" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Email</label>
+			 <input type="text" id="email" name="email" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Email 2</label>
+			 <input type="text" id="email_2" name="email_2" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Nomor HP 2</label>
+			 <input type="text" id="no_hp_2" name="no_hp_2" value=""/>
+			 </div>
+		</div>
+		<div id="list4" class="list">
+			 <div class="item">
+			 <label>Anak Ke</label>
+			 <input type="text" id="anak_ke" name="anak_ke" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Jumlah Saudara</label>
+			 <input type="text" id="jumlah_saudara" name="jumlah_saudara" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Nama Ayah</label>
+			 <input type="text" id="nama_ayah" name="nama_ayah" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Pekerjaan Ayah</label>
+			 <input type="text" id="pekerjaan_ayah" name="pekerjaan_ayah" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Penghasilan Ayah</label>
+			 <input type="text" id="penghasilan_ayah" name="penghasilan_ayah" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Nama Ibu</label>
+			 <input type="text" id="nama_ibu" name="nama_ibu" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Pekerjaan Ibu</label>
+			 <input type="text" id="pekerjaan_ibu" name="pekerjaan_ibu" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Penghasilan Ibu</label>
+			 <input type="text" id="penghasilan_ibu" name="penghasilan_ibu" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Nomor Telpon Orang Tua</label>
+			 <input type="text" id="no_telp_ortu" name="no_telp_ortu" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Nomor HP Orang Tua</label>
+			 <input type="text" id="no_hp_ortu" name="no_hp_ortu" value=""/>
+			 </div>
+		</div>
+		<div id="list5" class="list">
+			 <div class="item">
+			 <label>Alamat Orang Tua</label>
+			 <input type="text" id="alamat_ortu" name="alamat_ortu" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Jalan</label>
+			 <input type="text" id="alamat_ortu_jalan" name="alamat_ortu_jalan" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Kota</label>
+			 <input type="text" id="alamat_ortu_kota" name="alamat_ortu_kota" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Provinsi</label>
+			 <input type="text" id="alamat_ortu_provinsi" name="alamat_ortu_provinsi" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Kode Pos</label>
+			 <input type="text" id="alamat_ortu_kodepos" name="alamat_ortu_kodepos" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Negara</label>
+			 <input type="text" id="alamat_ortu_negara" name="alamat_ortu_negara" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Statu Tempat Tinggal</label>
+			 <input type="text" id="status_tempat_tinggal" name="status_tempat_tinggal" value=""/>
+			 </div>
+		</div>
+		<div id="list6" class="list">
+			 <div class="item">
+			 <label>Jumlah Mobil</label>
+			 <input type="text" id="jml_mobil" name="jml_mobil" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Jumlah Motor</label>
+			 <input type="text" id="jml_motor" name="jml_motor" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Jumlah Sepeda</label>
+			 <input type="text" id="jml_sepeda" name="jml_sepeda" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Kondisi Keluarga</label>
+			 <input type="text" id="kondisi_keluarga" name="kondisi_keluarga" value=""/>
+			 </div>
+		</div>
+		<div>
 			 <input type="button" id="update" class="button button-block" value="Update"/>
 			 <input type="button" id="delete" class="button button-block" value="Delete"/>
-			</div>
 		</div>
-		</ion-slide>
-		<ion-slide>
-		<div class="slide-wrapper">
-			 <input type="hidden" id="id" name="id" value=""/>
-			 <div class="item">
-			 <label>Komunitas</label>
-			 <input type="text" id="komunitas" name="komunitas" value=""/>
-			 </div>
-			 <div class="item">
-			 <label>Nama Lengkap</label>
-			 <input type="text" id="nama_lengkap" name="nama_lengkap" value=""/>
-			 </div>
-			 <div class="item">
-			 <label>Nama Panggilan</label>
-			 <input type="text" id="nama_panggilan" name="nama_panggilan" value=""/>
-			 </div>
-			 <div class="item">
-			 <input type="button" id="update" class="button button-block" value="Update"/>
-			 <input type="button" id="delete" class="button button-block" value="Delete"/>
-			</div>
-		</div>
-		</ion-slide>
-		</ion-slide-box>
-		</form>
+  </form>
 	</body>
 </html>
