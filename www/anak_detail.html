@@ -5,6 +5,14 @@
 	<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.2.min.js"></script>
 	 <script type="text/javascript" src="js/geturi.js"></script>
 	<script type="text/javascript">
+	function onDeviceReady()
+	{     
+		document.addEventListener("backbutton", BackKeyDown, true);
+	}
+	 function BackKeyDown()
+	{
+		window.location.href="anakasuh.html";
+	}
 	$(document).ready(function()
 	{
 		$("#list1").css("display", "none");
@@ -116,7 +124,7 @@
 	</head>
 	<body>
 	<div class="bar bar-header bar-positive" style="margin-bottom:80px;">
-		<a href="logged.html" class="button button-clear">Home</a>
+		<a href="list_anak.html" class="button button-clear">List Anak</a>
 		<h1 class="title" id="title">Anak Asuh</h1>
 		</div>
 		<div id="tab" class="tabs-striped tabs-top tabs-background-positive tabs-color-light">

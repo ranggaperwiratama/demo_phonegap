@@ -4,6 +4,14 @@
 	<link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/1.2.4/css/ionic.min.css">
 	<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.2.min.js"></script>
 	<script type="text/javascript">
+	function onDeviceReady()
+	{     
+		document.addEventListener("backbutton", BackKeyDown, true);
+	}
+	 function BackKeyDown()
+	{
+		window.location.href="logged.html";
+	}
 	$(document).ready(function()
 	{
 		var url="http://sianasdev.aat.or.id/index.php/anakasuh/get_all_ankasuh";
