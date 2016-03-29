@@ -11,6 +11,8 @@
 		$("#list2").css("display", "none");
 		$("#list3").css("display", "none");
 		$("#list4").css("display", "none");
+		$("#list5").css("display", "none");
+		$("#list6").css("display", "none");
 		
 		
 		var id =  decodeURI(getUrlVars()["id"]);
@@ -89,12 +91,12 @@
 				cache	: false,
 				beforeSend: function(){ $("#update").val('Connecting...');},
 				success	: function(data){
-					if(data=="ok")
+					if(data=="Ok")
 					 {
 					 alert("Updated");
 					 $("#update").val("Update");
 					 }
-					 else if(data=="error")
+					 else if(data=="Error")
 					 {
 					 alert("Error");
 					 }
@@ -120,32 +122,32 @@
 		<div id="tab" class="tabs-striped tabs-top tabs-background-positive tabs-color-light">
     <div class="tabs">
       <a class="tab-item" href="#list">
-        <i class="ion-person">
+        <i class="icon ion-person">
 		 </i>
 		 Data Pribadi
       </a>
       <a class="tab-item" href="#list1">
-        <i class="ion-ios-home"></i>
+        <i class="icon ion-ios-home"></i>
         Alamat Rumah
       </a>
       <a class="tab-item" href="#list2">
-        <i class="ion-ios-home"></i>
+        <i class="icon ion-ios-home"></i>
         Alamat Tinggal
       </a>
 	   <a class="tab-item" href="#list3">
-        <i class="ion-android-call"></i>
+        <i class="icon ion-android-call"></i>
         Kontak
       </a>
 	   <a class="tab-item" href="#list4">
-        <i class="ion-android-people"></i>
+        <i class="icon ion-android-people"></i>
         Orang Tua
       </a>
 	  <a class="tab-item" href="#list5">
-        <i class="ion-ios-home"></i>
+        <i class="icon ion-ios-home"></i>
         Alamat Orang Tua
       </a>
 	  <a class="tab-item" href="#list6">
-        <i class="ion-android-bicycle"></i>
+        <i class="icon ion-android-bicycle"></i>
         Lain - Lain
       </a>
     </div>
@@ -169,6 +171,14 @@
 			 <div class="item">
 			 <label>Jenis Kelamin</label>
 			 <input type="text" id="jenis_kelamin" name="jenis_kelamin" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Anak Ke</label>
+			 <input type="text" id="anak_ke" name="anak_ke" value=""/>
+			 </div>
+			 <div class="item">
+			 <label>Jumlah Saudara</label>
+			 <input type="text" id="jumlah_saudara" name="jumlah_saudara" value=""/>
 			 </div>
 			 <div class="item">
 			 <label>Agama</label>
@@ -258,14 +268,6 @@
 			 </div>
 		</div>
 		<div id="list4" class="list">
-			 <div class="item">
-			 <label>Anak Ke</label>
-			 <input type="text" id="anak_ke" name="anak_ke" value=""/>
-			 </div>
-			 <div class="item">
-			 <label>Jumlah Saudara</label>
-			 <input type="text" id="jumlah_saudara" name="jumlah_saudara" value=""/>
-			 </div>
 			 <div class="item">
 			 <label>Nama Ayah</label>
 			 <input type="text" id="nama_ayah" name="nama_ayah" value=""/>
