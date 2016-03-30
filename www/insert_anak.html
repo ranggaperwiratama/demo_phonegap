@@ -15,6 +15,17 @@
 		window.location.href="logged.html";
 	}
 	
+	function onInputClick(e){
+		var r = window.prompt("Masukkan tanggal (YYYY-MM-DD)", "2014-01-01");
+		if(/[\d]{4}-[\d]{1,2}-[\d]{1,2}/.test(r)){
+			//date ok
+			e.value=r;
+			var split=e.value.split("-");
+			var date=new Date(parseInt(split[0]),parseInt(split[1])-1,parseInt(split[2]));
+		}else{
+			alert("Invalid date. Try again.");
+		}
+	}
 	$(document).ready(function()
 	{
 		var json = (function(){
@@ -175,7 +186,7 @@
 			 </div>
 			 <div class="item">
 			 <label>Tanggal Lahir</label>
-			 <input type="date" id="tanggal_lahir" name="tanggal_lahir" value=""/>
+			 <input type="text" id="tanggal_lahir" name="tanggal_lahir" onclick="onInputClick(this)" value="2014-01-01"/>
 			 </div>
 		</div>
 		<div id="list1" class="list">
