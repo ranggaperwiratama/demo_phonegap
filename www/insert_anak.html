@@ -68,12 +68,14 @@
 				url		: "http://sianasdev.aat.or.id/index.php/anakasuh/update_data",
 				data	: dataString,
 				cache	: false,
-				beforeSend: function(){ $("#update").val('Connecting...');},
+				beforeSend: function(){ $("#insert").val('Connecting...');},
+				error: function(xhr, error){
+					console.debug(xhr); console.debug(error);},
 				success	: function(data){
 					if(data=="Ok")
 					 {
 					 alert("Updated");
-					 $("#update").val("Update");
+					 $("#insert").val("Insert");
 					 }
 					 else if(data=="Error")
 					 {
