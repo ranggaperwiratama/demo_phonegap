@@ -14,15 +14,17 @@
 	}
 	$(document).ready(function()
 	{
-		var url="http://sianasdev.aat.or.id/index.php/anakasuh/get_all_ankasuh";
+		var dataString = "username=" + localStorage.username + "&password=" + password + "&login=";
 		var json = (function(){
 		var json = null;
 			$.ajax({
-					'async': false,
-					'global': false,
-					'url': url,
-					'dataType': "json",
-					'success': function (data) {
+					type: "POST",
+					url: "http://sianasdev.aat.or.id/index.php/anakasuh/get_all_ankasuh",
+					data: dataString,
+					crossDomain: true,
+					cache: false,
+					dataType: "json",
+					success: function (data) {
 						json = data;
 					}
 				});
