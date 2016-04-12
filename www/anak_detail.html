@@ -5,6 +5,17 @@
 	<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.2.min.js"></script>
 	 <script type="text/javascript" src="js/geturi.js"></script>
 	<script type="text/javascript">
+		function onInputClick(e){
+		var r = window.prompt("Masukkan tanggal (YYYY-MM-DD)", "2014-01-01");
+		if(/[\d]{4}-[\d]{1,2}-[\d]{1,2}/.test(r)){
+			//date ok
+			e.value=r;
+			var split=e.value.split("-");
+			var date=new Date(parseInt(split[0]),parseInt(split[1])-1,parseInt(split[2]));
+		}else{
+			alert("Invalid date. Try again.");
+		}
+	}
 	function onDeviceReady()
 	{     
 		document.addEventListener("backbutton", BackKeyDown, true);
@@ -120,11 +131,96 @@
         $(tab).fadeIn();
     });
 	});
+	$(document).ready(function()
+	{
+		var json = (function(){
+			var json = null;
+			$.ajax({
+					async: false,
+					global: false,
+					url: "http://sianasdev.aat.or.id/index.php/anakasuh/cari_komunitas",
+					dataType: "json",
+					success: function (data) {
+						json = data;
+					}
+				});
+				return json;
+		})();
+		var json1 = (function(){
+			var json1 = null;
+			$.ajax({
+					async: false,
+					global: false,
+					url: "http://sianasdev.aat.or.id/index.php/anakasuh/cari_negara",
+					dataType: "json",
+					success: function (data) {
+						json1 = data;
+					}
+				});
+				return json1;
+		})();
+		
+		$("#list1").css("display", "none");
+		$("#list2").css("display", "none");
+		$("#list3").css("display", "none");
+		$("#list4").css("display", "none");
+		$("#list5").css("display", "none");
+		$("#list6").css("display", "none");
+		$("#insert").click(function(){
+			var dataString = $("#form").serialize();
+			$.ajax({
+				type	: 'POST',
+				url		: "http://sianasdev.aat.or.id/index.php/anakasuh/update_data",
+				data	: dataString,
+				cache	: false,
+				beforeSend: function(){ $("#insert").val('Connecting...');},
+				error: function(xhr, error){
+					console.debug(xhr); console.debug(error);},
+				success	: function(data){
+					if(data=="Ok")
+					 {
+					 alert("Updated");
+					 $("#insert").val("Insert");
+					 }
+					 else if(data=="Error")
+					 {
+					 alert("Error");
+					 }
+				}
+			});
+		});
+		
+		$(".tabs a").click(function() {
+			$(this).parent().toggleClass("active");
+			$(this).parent().siblings().removeClass("active");
+			var tab = $(this).attr("href");
+			$(".list").not(tab).css("display", "none");
+			$(tab).fadeIn();
+		});
+		
+		$(function() {
+			$("#title").text("Anak Asuh");
+		});	
+		
+		for (var i=0; i<json.komunitas.length; i++) {
+			var id=json.komunitas[i].id;
+			var nama=json.komunitas[i].nama;
+			$("#komunitas1").append("<option value="+id+">"+nama+"</option>");
+		};
+		
+		for (var i=0; i<json1.negara.length; i++) {
+			var id=json1.negara[i].id;
+			var nama=json1.negara[i].nama;
+			$("#alamat_rumah_negara1").append("<option value="+id+">"+nama+"</option>");
+			$("#alamat_tinggal_negara1").append("<option value="+id+">"+nama+"</option>");
+			$("#alamat_ortu_negara1").append("<option value="+id+">"+nama+"</option>");
+		};
+	});		
 	</script>
 	</head>
 	<body>
 	<div class="bar bar-header bar-positive" style="margin-bottom:80px;">
-		<a href="list_anak.html" class="button button-clear">List Anak</a>
+		<a href="logged.html" class="button button-clear">Home</a>
 		<h1 class="title" id="title">Anak Asuh</h1>
 		</div>
 		<div id="tab" class="tabs-striped tabs-top tabs-background-positive tabs-color-light">
@@ -164,12 +260,13 @@
 	</br></br></br></br></br>
   		<div id="list" class="list">
 			 <div class="item">
-			  <label>ID Anak Asuh</label>
+			 <label>ID Anak Asuh</label>
 			 <input type="text" id="id" name="id" value="" readonly/>
 			 </div>
 			 <div class="item">
 			 <label>Komunitas</label>
-			 <input type="text" id="komunitas" name="komunitas" value=""/>
+			 <input type="text" id="komunitas" name="komunitas" value="" readonly/>
+			 <select id="komunitas1" name="komunitas1"></select>
 			 </div>
 			 <div class="item">
 			 <label>Nama Lengkap</label>
@@ -181,15 +278,18 @@
 			 </div>
 			 <div class="item">
 			 <label>Jenis Kelamin</label>
-			 <input type="text" id="jenis_kelamin" name="jenis_kelamin" value=""/>
+			 <select id="jenis_kelamin" name="jenis_kelamin"/>
+				<option value="L">Laki-laki</option>
+				<option value="P">Perempuan</option>
+			 </select>
 			 </div>
 			 <div class="item">
 			 <label>Anak Ke</label>
-			 <input type="text" id="anak_ke" name="anak_ke" value=""/>
+			 <input type="number" id="anak_ke" name="anak_ke" value=""/>
 			 </div>
 			 <div class="item">
 			 <label>Jumlah Saudara</label>
-			 <input type="text" id="jumlah_saudara" name="jumlah_saudara" value=""/>
+			 <input type="number" id="jumlah_saudara" name="jumlah_saudara" value=""/>
 			 </div>
 			 <div class="item">
 			 <label>Agama</label>
@@ -201,7 +301,7 @@
 			 </div>
 			 <div class="item">
 			 <label>Tanggal Lahir</label>
-			 <input type="text" id="tanggal_lahir" name="tanggal_lahir" value=""/>
+			 <input type="text" id="tanggal_lahir" name="tanggal_lahir" onclick="onInputClick(this)" value="2014-01-01"/>
 			 </div>
 		</div>
 		<div id="list1" class="list">
@@ -223,11 +323,12 @@
 			 </div>
 			 <div class="item">
 			 <label>Kode Pos</label>
-			 <input type="text" id="alamat_rumah_kodepos" name="alamat_rumah_kodepos" value=""/>
+			 <input type="number" id="alamat_rumah_kodepos" name="alamat_rumah_kodepos" value=""/>
 			 </div>
 			 <div class="item">
 			 <label>Negara</label>
-			 <input type="text" id="alamat_rumah_negara" name="alamat_rumah_negara" value=""/>
+			  <input type="text" id="alamat_rumah_negara" name="alamat_rumah_negara" value="" readonly/>
+			 <select id="alamat_rumah_negara1" name="alamat_rumah_negara1" value=""></select>
 			 </div>
 		</div>
 		<div id="list2" class="list">
@@ -249,11 +350,12 @@
 			 </div>
 			 <div class="item">
 			 <label>Kode Pos</label>
-			 <input type="text" id="alamat_tinggal_kodepos" name="alamat_tinggal_kodepos" value=""/>
+			 <input type="number" id="alamat_tinggal_kodepos" name="alamat_tinggal_kodepos" value=""/>
 			 </div>
 			 <div class="item">
 			 <label>Negara</label>
-			 <input type="text" id="alamat_tinggal_negara" name="alamat_tinggal_negara" value=""/>
+			  <input type="text" id="alamat_tinggal_negara" name="alamat_rumah_negara" value="" readonly/>
+			 <select id="alamat_tinggal_negara1" name="alamat_tinggal_negara1" value=""></select>
 			 </div>
 		</div>
 		<div id="list3" class="list">
@@ -267,11 +369,11 @@
 			 </div>
 			 <div class="item">
 			 <label>Email</label>
-			 <input type="text" id="email" name="email" value=""/>
+			 <input type="email" id="email" name="email" value=""/>
 			 </div>
 			 <div class="item">
 			 <label>Email 2</label>
-			 <input type="text" id="email_2" name="email_2" value=""/>
+			 <input type="email" id="email_2" name="email_2" value=""/>
 			 </div>
 			 <div class="item">
 			 <label>Nomor HP 2</label>
@@ -289,7 +391,7 @@
 			 </div>
 			 <div class="item">
 			 <label>Penghasilan Ayah</label>
-			 <input type="text" id="penghasilan_ayah" name="penghasilan_ayah" value=""/>
+			 <input type="number" id="penghasilan_ayah" name="penghasilan_ayah" value=""/>
 			 </div>
 			 <div class="item">
 			 <label>Nama Ibu</label>
@@ -301,7 +403,7 @@
 			 </div>
 			 <div class="item">
 			 <label>Penghasilan Ibu</label>
-			 <input type="text" id="penghasilan_ibu" name="penghasilan_ibu" value=""/>
+			 <input type="number" id="penghasilan_ibu" name="penghasilan_ibu" value=""/>
 			 </div>
 			 <div class="item">
 			 <label>Nomor Telpon Orang Tua</label>
@@ -331,29 +433,35 @@
 			 </div>
 			 <div class="item">
 			 <label>Kode Pos</label>
-			 <input type="text" id="alamat_ortu_kodepos" name="alamat_ortu_kodepos" value=""/>
+			 <input type="number" id="alamat_ortu_kodepos" name="alamat_ortu_kodepos" value=""/>
 			 </div>
 			 <div class="item">
 			 <label>Negara</label>
-			 <input type="text" id="alamat_ortu_negara" name="alamat_ortu_negara" value=""/>
+			  <input type="text" id="alamat_ortu_negara" name="alamat_ortu_negara" value="" readonly/>
+			 <select id="alamat_ortu_negara1" name="alamat_ortu_negara1" value=""></select>
 			 </div>
 			 <div class="item">
 			 <label>Statu Tempat Tinggal</label>
-			 <input type="text" id="status_tempat_tinggal" name="status_tempat_tinggal" value=""/>
+			 <select id="status_tempat_tinggal" name="status_tempat_tinggal"/>
+				<option value="Rumah Sendri">Rumah Sendiri</option>
+				<option value="Kontrak">Kontrak</option>
+				<option value="Kos">Kos</option>
+				<option value="Menumpang">Menumpang</option>
+			 </select>
 			 </div>
 		</div>
 		<div id="list6" class="list">
 			 <div class="item">
 			 <label>Jumlah Mobil</label>
-			 <input type="text" id="jml_mobil" name="jml_mobil" value=""/>
+			 <input type="number" id="jml_mobil" name="jml_mobil" value=""/>
 			 </div>
 			 <div class="item">
 			 <label>Jumlah Motor</label>
-			 <input type="text" id="jml_motor" name="jml_motor" value=""/>
+			 <input type="number" id="jml_motor" name="jml_motor" value=""/>
 			 </div>
 			 <div class="item">
 			 <label>Jumlah Sepeda</label>
-			 <input type="text" id="jml_sepeda" name="jml_sepeda" value=""/>
+			 <input type="number" id="jml_sepeda" name="jml_sepeda" value=""/>
 			 </div>
 			 <div class="item">
 			 <label>Kondisi Keluarga</label>
@@ -362,7 +470,6 @@
 		</div>
 		<div>
 			 <input type="button" id="update" class="button button-block" value="Update"/>
-			 <input type="button" id="delete" class="button button-block" value="Delete"/>
 		</div>
   </form>
 	</body>
