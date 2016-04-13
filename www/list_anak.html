@@ -20,12 +20,11 @@
 		
 		var username =  localStorage.username;
 		var string = "username="+username;
-		var url="http://sianasdev.aat.or.id/index.php/anakasuh/get_all_ankasuh";
 		var json = (function(){
 		var json = null;
 			$.ajax({
 					type  : 'POST',
-					url   : url,
+					url   : "http://sianasdev.aat.or.id/index.php/anakasuh/get_all_ankasuh",
 					data  : string,
 					cache : false,
 					dataType : "json",
@@ -35,11 +34,11 @@
 				});
 				return json;
 		});
-		for (var i=0; i<json.anakasuh.length; i++) {
-			var id=json.anakasuh[i].id;
-			var komunitas=json.anakasuh[i].komunitas;
-			var nama_lengkap=json.anakasuh[i].nama_lengkap;
-			var agama=json.anakasuh[i].agama;
+		for (var i=0; i<json.length; i++) {
+			var id=json[i].id;
+			var komunitas=json[i].komunitas;
+			var nama_lengkap=json[i].nama_lengkap;
+			var agama=json[i].agama;
 			$("#listview").append("<a class='item' href='anak_detail.html?id="+id+"'><h2>"+nama_lengkap+ " </h2><p>"+komunitas+"</p></a>");
 		};
 	});
