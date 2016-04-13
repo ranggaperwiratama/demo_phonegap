@@ -10,12 +10,12 @@
 		document.addEventListener("backbutton", BackKeyDown, false);
 	}
 	$(function() {
-			$("#title").text("Anak Asuh ("+localStorage.username+")");
-		});	
+			$("#title").text("Home ("+localStorage.username+")");
+		});
 	</script>
 	<body>
 		<div class="bar bar-header bar-positive" style="margin-bottom:80px;">
-			<h1 class="title">Home</h1>
+			<h1 class="title" id="title" name="title">Home</h1>
 		</div>
 		<br/><br/>
 		<a class='item' href='list_anak.html'><h2>List Anak Asuh</h2><p>Melihat list anak asuh beserta detailnya</p></a>
